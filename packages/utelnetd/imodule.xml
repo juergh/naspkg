@@ -1,0 +1,17 @@
+<config>
+	<apkg>
+		<item>
+			<procudt_id>0</procudt_id>
+			<custom_id>0</custom_id>
+			<model_id>0</model_id>
+			<name>utelnetd</name>
+			<show>Telnet Server</show>
+			<enable>0</enable>
+			<version>1.0</version>
+			<date>20111030</date>
+			<path>/mnt/HD_a2/Nas_Prog/utelnetd</path>
+			<ps_name>utelnetd</ps_name>
+			<url>NULL</url>
+		</item>
+	</apkg>
+</config>

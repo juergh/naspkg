@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# Set some important globals
+SHARED=$1/../shared
+LOGFILE=$1/../log
+
+# Log a message
+log()
+{
+    echo `date "+%b %d %T"` `hostname` $*
+}
+
+# Install a shared package
+install()
+{
+    # Check if package is installed already
+    test -e /var/lock/shared.$1 && return
+
+    log "Installing $1"
+    $SHARED/$1/install.sh $SHARED/$1
+
+    # Create a lock file
+    touch /var/lock/shared.$1
+}
+
+# Remove an installed shared package
+remove()
+{
+    # Noop (so far)
+}
+
+# Start a daemon
+start()
+{
+    log "Starting $1"
+    $* || (sleep 2 && $*)
+}
+
+# Stop a daemon
+stop()
+{
+    pids=`pidof $1`
+    if [ -n "$pids" ] ; then
+	log "Stopping $1"
+	for pid in $pids ; do
+	    kill $pid || ( sleep 1 && kill -9 $pid )
+	done
+    fi
+}
+
+# Redirect all output to the logfile
+exec >> $LOGFILE 2>&1
+
+# Log the script's invocation
+log $0: $*
