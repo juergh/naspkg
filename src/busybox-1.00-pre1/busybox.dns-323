@@ -1,0 +1,20 @@
+# .busybox
+BusyBox v1.00-pre1 (2009.05.07-06:36+0000) multi-call binary
+
+Usage: busybox [function] [arguments]...
+   or: [function] [arguments]...
+
+	BusyBox is a multi-call binary that combines many common Unix
+	utilities into a single executable.  Most people will create a
+	link to busybox for each function they wish to use, and BusyBox
+	will act like whatever it was invoked as.
+
+Currently defined functions:
+	[, adjtimex, arping, ash, autoip, basename, busybox, cat, chgrp,
+	chmod, chown, cmp, cp, crond, crontab, date, df, dirname, dmesg,
+	du, dumpleases, echo, egrep, env, expr, false, fgrep, find, free,
+	fsck.minix, goweb, grep, gunzip, gzip, head, hostname, id, ifconfig,
+	init, kill, ln, ls, mkdir, mkfs.minix, mknod, mkswap, modprobe,
+	more, mv, pidof, ping, poweroff, ps, pwd, rdate, reboot, rm, route,
+	sed, sh, sleep, swapoff, swapon, sync, tail, tar, test, touch,
+	true, udhcpc, udhcpd, uname, vi, zcat
