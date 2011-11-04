@@ -1,0 +1,1 @@
+#define CONFIG_MTD_PHRAM_MODULE 1

@@ -1,0 +1,1 @@
+#define CONFIG_HFS_FS_MODULE 1

@@ -1,0 +1,1 @@
+#define CONFIG_USB_ZD1201_MODULE 1

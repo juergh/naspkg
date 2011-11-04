@@ -1,0 +1,1 @@
+#define CONFIG_RAW_DRIVER_MODULE 1

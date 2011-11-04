@@ -1,0 +1,1 @@
+#define CONFIG_ALI_FIR_MODULE 1

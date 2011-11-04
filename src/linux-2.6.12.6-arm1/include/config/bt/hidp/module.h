@@ -1,0 +1,1 @@
+#define CONFIG_BT_HIDP_MODULE 1

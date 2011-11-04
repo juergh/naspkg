@@ -1,0 +1,1 @@
+#define CONFIG_PARPORT_PC_FIFO 1

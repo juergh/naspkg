@@ -1,0 +1,1 @@
+#define CONFIG_NSC_FIR_MODULE 1

@@ -1,0 +1,1 @@
+#define CONFIG_MD_RAID10_MODULE 1

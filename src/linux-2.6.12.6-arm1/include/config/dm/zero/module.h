@@ -1,0 +1,1 @@
+#define CONFIG_DM_ZERO_MODULE 1

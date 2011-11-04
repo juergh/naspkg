@@ -1,0 +1,1 @@
+#define CONFIG_XFRM_USER_MODULE 1

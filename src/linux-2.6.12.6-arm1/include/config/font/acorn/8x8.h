@@ -1,0 +1,1 @@
+#define CONFIG_FONT_ACORN_8x8 1

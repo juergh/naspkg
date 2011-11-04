@@ -1,0 +1,1 @@
+#define CONFIG_TIMER_ACORN 1

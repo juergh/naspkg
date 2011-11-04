@@ -1,0 +1,1 @@
+#define CONFIG_HAS_TLS_REG 1

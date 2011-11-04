@@ -1,0 +1,1 @@
+#define CONFIG_ADFS_FS_MODULE 1

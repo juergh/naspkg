@@ -1,0 +1,1 @@
+#define CONFIG_USB_ETH_MODULE 1

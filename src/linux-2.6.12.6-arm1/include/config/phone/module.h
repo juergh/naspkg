@@ -1,0 +1,1 @@
+#define CONFIG_PHONE_MODULE 1

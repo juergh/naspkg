@@ -1,0 +1,1 @@
+#undef CONFIG_VFP_RUN_FAST_MODE

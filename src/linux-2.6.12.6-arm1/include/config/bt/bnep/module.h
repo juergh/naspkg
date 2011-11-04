@@ -1,0 +1,1 @@
+#define CONFIG_BT_BNEP_MODULE 1

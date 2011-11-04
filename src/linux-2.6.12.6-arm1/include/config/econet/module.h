@@ -1,0 +1,1 @@
+#define CONFIG_ECONET_MODULE 1

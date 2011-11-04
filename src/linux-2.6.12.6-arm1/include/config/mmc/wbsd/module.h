@@ -1,0 +1,1 @@
+#define CONFIG_MMC_WBSD_MODULE 1

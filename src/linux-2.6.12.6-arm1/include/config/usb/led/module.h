@@ -1,0 +1,1 @@
+#define CONFIG_USB_LED_MODULE 1

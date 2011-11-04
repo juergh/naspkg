@@ -1,0 +1,1 @@
+#define CONFIG_RXRPC_MODULE 1
