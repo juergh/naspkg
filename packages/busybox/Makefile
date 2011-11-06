@@ -7,6 +7,7 @@ all: $(NAME)
 include ../../build/make.build
 
 $(NAME): $(SRC) links _builddir
+	install -d -m0755 $(BUILDDIR)/bin
 	install -m0755 $(SRC)/busybox $(BUILDDIR)/bin
 	install -m0644 $(SRC)/busybox.links.diff $(BUILDDIR)/busybox.links
 	$(MAKE) _package

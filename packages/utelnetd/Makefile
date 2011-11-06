@@ -7,6 +7,7 @@ all: $(NAME)
 include ../../build/make.build
 
 $(NAME): $(SRC) _builddir
+	install -d -m0755 $(BUILDDIR)/bin
 	install -m0755 $(SRC)/utelnetd $(BUILDDIR)/bin
 	$(MAKE) _package
 
