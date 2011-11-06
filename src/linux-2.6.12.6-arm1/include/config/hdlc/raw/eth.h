@@ -1,1 +1,0 @@
-#undef CONFIG_HDLC_RAW_ETH

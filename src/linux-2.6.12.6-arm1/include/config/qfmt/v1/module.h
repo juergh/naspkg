@@ -1,1 +1,0 @@
-#define CONFIG_QFMT_V1_MODULE 1

@@ -1,1 +1,0 @@
-#define CONFIG_INIT_ENV_ARG_LIMIT 32

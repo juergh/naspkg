@@ -1,1 +1,0 @@
-#define CONFIG_CRC_CCITT_MODULE 1

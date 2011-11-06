@@ -1,1 +1,0 @@
-#define CONFIG_LIBCRC32C 1

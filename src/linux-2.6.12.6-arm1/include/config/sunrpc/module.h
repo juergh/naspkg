@@ -1,1 +1,0 @@
-#define CONFIG_SUNRPC_MODULE 1

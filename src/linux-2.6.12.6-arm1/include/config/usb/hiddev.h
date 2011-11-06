@@ -1,1 +1,0 @@
-#define CONFIG_USB_HIDDEV 1

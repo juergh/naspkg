@@ -1,1 +1,0 @@
-#define CONFIG_MTD_BLOCK_RO_MODULE 1

@@ -1,1 +1,0 @@
-#define CONFIG_LCD_DEVICE 1

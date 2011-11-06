@@ -1,1 +1,0 @@
-#define CONFIG_CLS_U32_MARK 1

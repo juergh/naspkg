@@ -1,1 +1,0 @@
-#define CONFIG_REISERFS_FS_XATTR 1

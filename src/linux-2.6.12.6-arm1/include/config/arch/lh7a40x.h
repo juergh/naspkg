@@ -1,1 +1,0 @@
-#undef CONFIG_ARCH_LH7A40X

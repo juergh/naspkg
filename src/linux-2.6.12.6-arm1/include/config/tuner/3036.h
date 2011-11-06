@@ -1,1 +1,0 @@
-#undef CONFIG_TUNER_3036

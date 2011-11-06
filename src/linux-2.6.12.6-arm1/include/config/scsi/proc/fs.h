@@ -1,1 +1,0 @@
-#define CONFIG_SCSI_PROC_FS 1

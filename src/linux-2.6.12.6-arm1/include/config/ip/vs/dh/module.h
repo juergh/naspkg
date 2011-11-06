@@ -1,1 +1,0 @@
-#define CONFIG_IP_VS_DH_MODULE 1

@@ -1,1 +1,0 @@
-#define CONFIG_CRAMFS_MODULE 1

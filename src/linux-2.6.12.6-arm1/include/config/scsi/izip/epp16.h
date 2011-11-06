@@ -1,1 +1,0 @@
-#undef CONFIG_SCSI_IZIP_EPP16

@@ -1,1 +1,0 @@
-#define CONFIG_NETROM_MODULE 1

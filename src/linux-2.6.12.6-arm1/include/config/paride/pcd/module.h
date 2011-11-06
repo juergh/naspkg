@@ -1,1 +1,0 @@
-#define CONFIG_PARIDE_PCD_MODULE 1

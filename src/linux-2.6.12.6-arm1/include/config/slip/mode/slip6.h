@@ -1,1 +1,0 @@
-#define CONFIG_SLIP_MODE_SLIP6 1

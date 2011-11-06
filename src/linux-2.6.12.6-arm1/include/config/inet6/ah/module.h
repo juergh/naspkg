@@ -1,1 +1,0 @@
-#define CONFIG_INET6_AH_MODULE 1

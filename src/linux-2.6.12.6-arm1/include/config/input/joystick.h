@@ -1,1 +1,0 @@
-#define CONFIG_INPUT_JOYSTICK 1

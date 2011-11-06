@@ -1,1 +1,0 @@
-#define CONFIG_QNX4FS_FS_MODULE 1

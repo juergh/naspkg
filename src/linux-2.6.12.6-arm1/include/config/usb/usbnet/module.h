@@ -1,1 +1,0 @@
-#define CONFIG_USB_USBNET_MODULE 1

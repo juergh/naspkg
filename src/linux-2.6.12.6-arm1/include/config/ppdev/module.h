@@ -1,1 +1,0 @@
-#define CONFIG_PPDEV_MODULE 1

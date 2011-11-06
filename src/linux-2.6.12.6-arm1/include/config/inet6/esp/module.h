@@ -1,1 +1,0 @@
-#define CONFIG_INET6_ESP_MODULE 1

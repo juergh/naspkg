@@ -1,1 +1,0 @@
-#define CONFIG_MTD_MTDRAM_MODULE 1

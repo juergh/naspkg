@@ -1,1 +1,0 @@
-#define CONFIG_SUNRPC_GSS_MODULE 1

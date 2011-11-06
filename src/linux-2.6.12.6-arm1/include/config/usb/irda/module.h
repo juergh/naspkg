@@ -1,1 +1,0 @@
-#define CONFIG_USB_IRDA_MODULE 1

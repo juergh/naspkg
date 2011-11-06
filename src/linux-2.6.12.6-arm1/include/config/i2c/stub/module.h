@@ -1,1 +1,0 @@
-#define CONFIG_I2C_STUB_MODULE 1

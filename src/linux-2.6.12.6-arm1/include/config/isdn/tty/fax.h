@@ -1,1 +1,0 @@
-#define CONFIG_ISDN_TTY_FAX 1

@@ -1,1 +1,0 @@
-#undef CONFIG_CLS_U32_PERF

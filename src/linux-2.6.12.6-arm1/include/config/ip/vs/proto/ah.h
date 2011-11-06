@@ -1,1 +1,0 @@
-#define CONFIG_IP_VS_PROTO_AH 1

@@ -1,1 +1,0 @@
-#define CONFIG_JOLIET 1

@@ -1,1 +1,0 @@
-#define CONFIG_X25_MODULE 1

@@ -1,1 +1,0 @@
-#define CONFIG_INPUT 1

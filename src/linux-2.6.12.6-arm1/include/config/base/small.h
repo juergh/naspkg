@@ -1,1 +1,0 @@
-#define CONFIG_BASE_SMALL 0

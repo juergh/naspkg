@@ -1,1 +1,0 @@
-#undef CONFIG_DM_MULTIPATH_EMC

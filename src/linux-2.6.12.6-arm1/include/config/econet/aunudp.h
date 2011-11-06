@@ -1,1 +1,0 @@
-#define CONFIG_ECONET_AUNUDP 1

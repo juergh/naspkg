@@ -1,1 +1,0 @@
-#define CONFIG_SND_PCM_MODULE 1

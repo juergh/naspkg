@@ -1,1 +1,0 @@
-#define CONFIG_XFS_EXPORT 1

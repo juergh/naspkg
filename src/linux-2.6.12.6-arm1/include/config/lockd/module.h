@@ -1,1 +1,0 @@
-#define CONFIG_LOCKD_MODULE 1

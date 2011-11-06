@@ -1,1 +1,0 @@
-#define CONFIG_BT_RFCOMM_MODULE 1

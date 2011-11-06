@@ -1,1 +1,0 @@
-#define CONFIG_NET_PKTGEN_MODULE 1

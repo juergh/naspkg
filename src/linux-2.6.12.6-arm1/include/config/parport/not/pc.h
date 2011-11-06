@@ -1,1 +1,0 @@
-#define CONFIG_PARPORT_NOT_PC 1

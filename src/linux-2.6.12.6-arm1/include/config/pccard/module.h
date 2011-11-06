@@ -1,1 +1,0 @@
-#define CONFIG_PCCARD_MODULE 1

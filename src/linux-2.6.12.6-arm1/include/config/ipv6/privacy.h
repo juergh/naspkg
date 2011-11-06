@@ -1,1 +1,0 @@
-#define CONFIG_IPV6_PRIVACY 1

@@ -1,1 +1,0 @@
-#define CONFIG_CRYPTO_DES_MODULE 1

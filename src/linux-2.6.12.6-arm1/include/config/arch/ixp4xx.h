@@ -1,1 +1,0 @@
-#undef CONFIG_ARCH_IXP4XX

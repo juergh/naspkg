@@ -1,1 +1,0 @@
-#define CONFIG_USB_ETH_RNDIS 1

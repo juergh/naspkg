@@ -1,1 +1,0 @@
-#define CONFIG_IP_VS_FTP_MODULE 1

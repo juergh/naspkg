@@ -1,1 +1,0 @@
-#undef CONFIG_JFFS2_FS_NOR_ECC

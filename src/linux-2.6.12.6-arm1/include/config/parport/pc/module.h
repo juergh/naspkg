@@ -1,1 +1,0 @@
-#define CONFIG_PARPORT_PC_MODULE 1

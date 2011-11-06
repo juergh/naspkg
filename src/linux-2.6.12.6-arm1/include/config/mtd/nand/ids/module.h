@@ -1,1 +1,0 @@
-#define CONFIG_MTD_NAND_IDS_MODULE 1

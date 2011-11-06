@@ -1,1 +1,0 @@
-#define CONFIG_USB_USS720_MODULE 1

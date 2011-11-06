@@ -1,1 +1,0 @@
-#define CONFIG_SND_MPU401_MODULE 1

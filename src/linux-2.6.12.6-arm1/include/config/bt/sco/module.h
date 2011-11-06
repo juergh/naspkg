@@ -1,1 +1,0 @@
-#define CONFIG_BT_SCO_MODULE 1

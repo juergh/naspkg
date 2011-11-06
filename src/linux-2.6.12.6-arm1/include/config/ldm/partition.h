@@ -1,1 +1,0 @@
-#define CONFIG_LDM_PARTITION 1

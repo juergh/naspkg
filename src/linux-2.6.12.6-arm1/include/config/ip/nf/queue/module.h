@@ -1,1 +1,0 @@
-#define CONFIG_IP_NF_QUEUE_MODULE 1

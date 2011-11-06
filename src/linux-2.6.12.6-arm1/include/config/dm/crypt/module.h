@@ -1,1 +1,0 @@
-#define CONFIG_DM_CRYPT_MODULE 1

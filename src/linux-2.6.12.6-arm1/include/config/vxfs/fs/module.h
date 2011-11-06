@@ -1,1 +1,0 @@
-#define CONFIG_VXFS_FS_MODULE 1

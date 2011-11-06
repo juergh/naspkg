@@ -1,1 +1,0 @@
-#define CONFIG_MAC_PARTITION 1

@@ -1,1 +1,0 @@
-#define CONFIG_GAMEPORT_MODULE 1

@@ -1,1 +1,0 @@
-#define CONFIG_SLIP_MODULE 1

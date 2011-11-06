@@ -1,1 +1,0 @@
-#define CONFIG_USB_G_SERIAL_MODULE 1

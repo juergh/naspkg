@@ -1,1 +1,0 @@
-#define CONFIG_USB_PWC_MODULE 1

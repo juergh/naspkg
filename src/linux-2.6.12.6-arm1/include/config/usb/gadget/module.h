@@ -1,1 +1,0 @@
-#define CONFIG_USB_GADGET_MODULE 1

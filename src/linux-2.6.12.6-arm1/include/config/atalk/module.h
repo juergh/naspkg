@@ -1,1 +1,0 @@
-#define CONFIG_ATALK_MODULE 1

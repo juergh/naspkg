@@ -1,1 +1,0 @@
-#define CONFIG_USB_NET1080 1

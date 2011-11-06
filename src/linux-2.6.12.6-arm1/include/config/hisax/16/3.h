@@ -1,1 +1,0 @@
-#define CONFIG_HISAX_16_3 1

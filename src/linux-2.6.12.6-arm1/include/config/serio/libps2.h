@@ -1,1 +1,0 @@
-#define CONFIG_SERIO_LIBPS2 1

@@ -1,1 +1,0 @@
-#define CONFIG_LOCKD_V4 1

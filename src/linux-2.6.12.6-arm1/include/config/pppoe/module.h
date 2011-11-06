@@ -1,1 +1,0 @@
-#define CONFIG_PPPOE_MODULE 1

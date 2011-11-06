@@ -1,1 +1,0 @@
-#define CONFIG_ESI_DONGLE_MODULE 1

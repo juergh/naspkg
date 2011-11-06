@@ -1,1 +1,0 @@
-#define CONFIG_INFTL_MODULE 1

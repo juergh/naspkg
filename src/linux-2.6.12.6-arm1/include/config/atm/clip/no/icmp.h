@@ -1,1 +1,0 @@
-#undef CONFIG_ATM_CLIP_NO_ICMP

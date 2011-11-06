@@ -1,1 +1,0 @@
-#define CONFIG_ECONET_NATIVE 1

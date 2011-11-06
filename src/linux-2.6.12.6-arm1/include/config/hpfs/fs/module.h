@@ -1,1 +1,0 @@
-#define CONFIG_HPFS_FS_MODULE 1

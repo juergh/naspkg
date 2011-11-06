@@ -1,1 +1,0 @@
-#define CONFIG_LLC2_MODULE 1

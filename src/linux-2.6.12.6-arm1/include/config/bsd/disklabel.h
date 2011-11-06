@@ -1,1 +1,0 @@
-#define CONFIG_BSD_DISKLABEL 1

@@ -1,1 +1,0 @@
-#define CONFIG_JFS_FS_MODULE 1

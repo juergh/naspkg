@@ -1,1 +1,0 @@
-#define CONFIG_NFSD_MODULE 1

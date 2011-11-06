@@ -1,1 +1,0 @@
-#define CONFIG_SERIO_RPCKBD 1

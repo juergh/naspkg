@@ -1,1 +1,0 @@
-#define CONFIG_MTD_CFI_UTIL_MODULE 1

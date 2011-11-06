@@ -1,1 +1,0 @@
-#define CONFIG_CRYPTO_MD4_MODULE 1

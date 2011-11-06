@@ -1,1 +1,0 @@
-#undef CONFIG_BT_HCIUSB

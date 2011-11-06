@@ -1,1 +1,0 @@
-#define CONFIG_USB_ARCH_HAS_HCD 1

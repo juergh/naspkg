@@ -1,1 +1,0 @@
-#define CONFIG_DLCI_COUNT 24

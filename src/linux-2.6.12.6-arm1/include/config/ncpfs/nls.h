@@ -1,1 +1,0 @@
-#define CONFIG_NCPFS_NLS 1

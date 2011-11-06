@@ -1,1 +1,0 @@
-#define CONFIG_EFS_FS_MODULE 1

@@ -1,1 +1,0 @@
-#define CONFIG_USB_KBD_MODULE 1

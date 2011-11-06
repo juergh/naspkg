@@ -1,1 +1,0 @@
-#define CONFIG_NTFS_FS_MODULE 1

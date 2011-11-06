@@ -1,1 +1,0 @@
-#define CONFIG_USB_SL811_CS_MODULE 1

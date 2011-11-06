@@ -1,1 +1,0 @@
-#define CONFIG_ATA_OVER_ETH_MODULE 1

@@ -1,1 +1,0 @@
-#define CONFIG_IP_VS_NQ_MODULE 1

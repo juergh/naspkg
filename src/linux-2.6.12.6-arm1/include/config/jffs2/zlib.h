@@ -1,1 +1,0 @@
-#define CONFIG_JFFS2_ZLIB 1

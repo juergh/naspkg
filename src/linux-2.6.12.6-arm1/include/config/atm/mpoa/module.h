@@ -1,1 +1,0 @@
-#define CONFIG_ATM_MPOA_MODULE 1

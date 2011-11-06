@@ -1,1 +1,0 @@
-#define CONFIG_CRYPTO_AES 1

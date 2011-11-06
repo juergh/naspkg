@@ -1,1 +1,0 @@
-#undef CONFIG_CYZ_INTR

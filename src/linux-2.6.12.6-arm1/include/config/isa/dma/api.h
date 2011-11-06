@@ -1,1 +1,0 @@
-#define CONFIG_ISA_DMA_API 1

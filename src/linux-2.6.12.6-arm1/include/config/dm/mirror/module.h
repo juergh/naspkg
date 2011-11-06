@@ -1,1 +1,0 @@
-#define CONFIG_DM_MIRROR_MODULE 1

@@ -1,1 +1,0 @@
-#define CONFIG_BT_BNEP_MC_FILTER 1

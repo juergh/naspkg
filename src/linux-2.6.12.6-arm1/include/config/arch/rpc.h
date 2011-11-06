@@ -1,1 +1,0 @@
-#define CONFIG_ARCH_RPC 1

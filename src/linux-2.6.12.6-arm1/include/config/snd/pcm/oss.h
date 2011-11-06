@@ -1,1 +1,0 @@
-#undef CONFIG_SND_PCM_OSS

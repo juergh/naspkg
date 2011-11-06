@@ -1,1 +1,0 @@
-#define CONFIG_BT_HCIUART_BCSP 1

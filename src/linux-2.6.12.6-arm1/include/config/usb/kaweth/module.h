@@ -1,1 +1,0 @@
-#define CONFIG_USB_KAWETH_MODULE 1
