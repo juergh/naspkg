@@ -7,8 +7,8 @@
 			<name>utelnetd</name>
 			<show>Telnet Server</show>
 			<enable>0</enable>
-			<version>1.0</version>
-			<date>20111030</date>
+			<version>VERSION</version>
+			<date>DATE</date>
 			<path>/mnt/HD_a2/Nas_Prog/utelnetd</path>
 			<ps_name>utelnetd</ps_name>
 			<url>NULL</url>

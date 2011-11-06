@@ -10,10 +10,10 @@ endif
 BUILDDIR = .build/$(SHARED)/$(NAME)
 
 # Root of tree
-ROOT=$(PWD)/../../
+ROOT = $(PWD)/../../
 
 # Installation directory
-DESTDIR=$(ROOT)/Nas_Pkg
+DESTDIR = $(ROOT)/Nas_Pkg
 
 # Package file name
 NASPKG=$(NAME)-$(VERSION).tgz
@@ -22,6 +22,9 @@ NASPKG=$(NAME)-$(VERSION).tgz
 _builddir:
 	mkdir -p $(BUILDDIR) || true
 	cp -aR naspkg/* $(BUILDDIR)
+	test -e $(BUILDDIR)/imodule.xml && \
+		sed -i -e 's/VERSION/$(VERSION)/' -e 's/DATE/$(DATE)/' \
+			$(BUILDDIR)/imodule.xml
 
 # Build the package file
 _package:
