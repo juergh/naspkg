@@ -24,9 +24,6 @@ $(NAME): $(SRC) _builddir
 		install -d -m0755 $(BUILDDIR)/modules/$$dir ; \
 		install -m0644 output/$$mod $(BUILDDIR)/modules/$$dir ; \
 	done
-#	install -m0755 $(SRC)/dropbear $(BUILDDIR)/bin
-#	install -m0755 $(SRC)/dropbearkey $(BUILDDIR)/bin
-#	install -m0755 $(SRC)/scp $(BUILDDIR)/bin
 	$(MAKE) _package
 
 $(SRC): output
