@@ -36,7 +36,7 @@ _install:
 _clean:
 	-@$(MAKE) -C $(SRC) clean
 	-@$(MAKE) -C $(SRC) distclean
-	@find . \( -name '*~' \) -print | xargs rm -rf
+	@find . \( -name '*~' -o -name 'config.log' \) -print | xargs rm -rf
 	@test -d .build && rm -rf .build || true
 	@test -f $(NASPKG) && rm $(NASPKG) || true
 
