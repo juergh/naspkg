@@ -1,19 +1,18 @@
 include naspkg/info
+include ../../build/make.rules
 
 SRC = utelnetd-0.1.9
 
-all: $(NAME)
+$(STAGING)/bin/utelnetd:
+	install -d -m0755 $(STAGING)/bin
+	install -m0755 $(SRC)/utelnetd $(STAGING)/bin
 
-include ../../build/make.build
-
-$(NAME): $(SRC) _builddir
-	install -d -m0755 $(BUILDDIR)/bin
-	install -m0755 $(SRC)/utelnetd $(BUILDDIR)/bin
-	$(MAKE) _package
-
-$(SRC):
+$(SRC)/utelnetd:
 	$(MAKE) -C $(SRC)
 
-clean: _clean
+$(NAME)-install: $(STAGING)/bin/utelnetd
 
-install: _install
+$(NAME)-source: $(SRC)/utelnetd
+
+$(NAME)-clean:
+	@make -C $(SRC) clean

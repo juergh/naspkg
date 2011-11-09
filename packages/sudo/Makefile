@@ -1,20 +1,19 @@
 include naspkg/info
+include ../../build/make.rules
 
 SRC = sudo-1.6.8p12
 
-all: $(NAME)
+$(STAGING)/bin/sudo:
+	install -d -m0755 $(STAGING)/bin
+	install -m0755 $(SRC)/sudo $(STAGING)/bin
 
-include ../../build/make.build
-
-$(NAME): $(SRC) _builddir
-	install -d -m0755 $(BUILDDIR)/bin
-	install -m0755 $(SRC)/sudo $(BUILDDIR)/bin
-	$(MAKE) _package
-
-$(SRC):
+$(SRC)/sudo:
 	cd $(SRC) && ./configure --host=i686-pc-linux-gnu
 	$(MAKE) -C $(SRC)
 
-clean: _clean
+$(NAME)-install: $(STAGING)/bin/sudo
 
-install: _install
+$(NAME)-source: $(SRC)/sudo
+
+$(NAME)-clean:
+	$(MAKE) -C $(SRC) realclean

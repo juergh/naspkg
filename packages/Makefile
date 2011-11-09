@@ -7,7 +7,6 @@ all: pkgs
 
 clean: TARGET=clean
 clean: pkgs
-	-rm *~
 
 install: TARGET=install
 install: pkgs

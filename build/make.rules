@@ -1,0 +1,48 @@
+# Check if we're building a shared package
+ifeq ($(NAME), shared)
+  SHARED :=
+else
+  SHARED := $(shell test -e naspkg/imodule.xml && echo || echo shared)
+endif
+
+# Temporary staging directory
+STAGING := .staging/$(SHARED)/$(NAME)
+
+# Root of tree
+ROOT := $(PWD)/../../
+
+# Installation directory
+DESTDIR := $(ROOT)/Nas_Pkg
+
+# Package file name
+NASPKG := $(NAME)-$(VERSION).tgz
+
+all: $(NAME)-source $(STAGING) $(NAME)-install $(NASPKG)
+
+# Create the package tarball
+$(NASPKG):
+	tar -czvf $(NASPKG) -C .staging .
+
+# Create the staging directory and copy the naspkg template
+$(STAGING):
+	mkdir -p $(STAGING) || true
+	cp -aR naspkg/* $(STAGING)
+	test -e $(STAGING)/imodule.xml && \
+		sed -i -e 's/VERSION/$(VERSION)/' -e 's/DATE/$(DATE)/' \
+			$(STAGING)/imodule.xml || true
+
+# Install the package
+install:
+	test -d $(DESTDIR) || mkdir -p $(DESTDIR)
+	tar -xzvf $(NASPKG) -C $(DESTDIR)
+
+# Cleaning rules
+clean:	$(NAME)-clean
+	@find . \( -name '*~' -o \
+		-name 'config.log' -o \
+		-name 'config.status' \) -print | xargs rm -rf
+	@test -d .staging && rm -rf .staging || true
+	@test -f $(NASPKG) && rm $(NASPKG) || true
+
+help:
+	@echo "Usage:"

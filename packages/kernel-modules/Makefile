@@ -1,4 +1,5 @@
 include naspkg/info
+include ../../build/make.rules
 
 SRC = linux-2.6.12.6-arm1
 
@@ -14,22 +15,6 @@ MODULES = \
 	sound/usb/snd-usb-audio.ko \
 	sound/usb/snd-usb-lib.ko \
 
-all: $(NAME)
-
-include ../../build/make.build
-
-$(NAME): $(SRC) _builddir
-	for mod in $(MODULES) ; do \
-		dir=$$(dirname $$mod) ; \
-		install -d -m0755 $(BUILDDIR)/modules/$$dir ; \
-		install -m0644 output/$$mod $(BUILDDIR)/modules/$$dir ; \
-	done
-	$(MAKE) _package
-
-$(SRC): output
-	cd $(SRC) && $(MAKE) ARCH=arm CROSS_COMPILE=arm-linux-uclibc- \
-		O=../output modules
-
 output:
 	mkdir output
 	cp -f config output/.config
@@ -38,7 +23,20 @@ menuconfig: output
 	cd $(SRC) && $(MAKE) ARCH=arm O=../output menuconfig
 	cp output/.config config
 
-clean: _clean
-	test -d output && rm -rf output || true
+$(STAGING)/modules/sound/core/oss/snd-mixer-oss.ko:
+	for mod in $(MODULES) ; do \
+		dir=$$(dirname $$mod) ; \
+		install -d -m0755 $(STAGING)/modules/$$dir ; \
+		install -m0644 output/$$mod $(STAGING)/modules/$$dir ; \
+	done
 
-install: _install
+output/sound/core/oss/snd-mixer-oss.ko: output
+	cd $(SRC) && $(MAKE) ARCH=arm CROSS_COMPILE=arm-linux-uclibc- \
+		O=../output modules
+
+$(NAME)-install: $(STAGING)/modules/sound/core/oss/snd-mixer-oss.ko
+
+$(NAME)-source: output/sound/core/oss/snd-mixer-oss.ko
+
+$(NAME)-clean:
+	test -d output && rm -rf output || true

@@ -1,14 +1,8 @@
 include naspkg/info
+include ../../build/make.rules
 
-SRC = 
+$(NAME)-install:
 
-all: $(NAME)
+$(NAME)-source:
 
-include ../../build/make.build
-
-$(NAME): _builddir
-	$(MAKE) _package
-
-clean: _clean
-
-install: _install
+$(NAME)-clean:
