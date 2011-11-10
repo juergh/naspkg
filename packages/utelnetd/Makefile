@@ -1,4 +1,3 @@
-include naspkg/info
 include ../../build/make.rules
 
 SRC = utelnetd-0.1.9

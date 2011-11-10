@@ -1,4 +1,3 @@
-include naspkg/info
 include ../../build/make.rules
 
 SRC = sudo-1.6.8p12

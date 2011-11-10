@@ -1,4 +1,3 @@
-include naspkg/info
 include ../../build/make.rules
 
 SRC = busybox-1.00-pre1

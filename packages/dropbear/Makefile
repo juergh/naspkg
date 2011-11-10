@@ -1,4 +1,3 @@
-include naspkg/info
 include ../../build/make.rules
 
 SRC = dropbear-0.53.1

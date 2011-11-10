@@ -1,4 +1,3 @@
-include naspkg/info
 include ../../build/make.rules
 
 SRC = linux-2.6.12.6-arm1

@@ -1,3 +1,10 @@
+# -*- Makefile -*-
+
+# Parse the info file. The 3rd line is the one and only we care about!
+NAME    := $(shell awk 'NR == 3 { print $$1 }' naspkg/info)
+VERSION := $(shell awk 'NR == 3 { print $$3 }' naspkg/info)
+DATE    := $(shell awk 'NR == 3 { print $$5 }' naspkg/info | tr -d '/')
+
 # Check if we're building a shared package
 ifeq ($(NAME), shared)
   SHARED :=
@@ -14,10 +21,16 @@ ROOT := $(PWD)/../../
 # Installation directory
 DESTDIR := $(ROOT)/Nas_Pkg
 
-# Package file name
+# Package and info file names
 NASPKG := $(NAME)-$(VERSION).tgz
+INFO   := $(NAME)-$(VERSION).info
 
-all: $(NAME)-source $(STAGING) $(NAME)-install $(NASPKG)
+# Create all
+all: $(NAME)-source $(STAGING) $(NAME)-install $(NASPKG) $(INFO)
+
+# Create the info file
+$(INFO):
+	cp naspkg/info $(INFO)
 
 # Create the package tarball
 $(NASPKG):
@@ -25,7 +38,7 @@ $(NASPKG):
 
 # Create the staging directory and copy the naspkg template
 $(STAGING):
-	mkdir -p $(STAGING) || true
+	mkdir -p $(STAGING)
 	cp -aR naspkg/* $(STAGING)
 	test -e $(STAGING)/imodule.xml && \
 		sed -i -e 's/VERSION/$(VERSION)/' -e 's/DATE/$(DATE)/' \
@@ -34,7 +47,8 @@ $(STAGING):
 # Install the package
 install:
 	test -d $(DESTDIR) || mkdir -p $(DESTDIR)
-	tar -xzvf $(NASPKG) -C $(DESTDIR)
+	@echo "Installing $(NASPKG) ..."
+	tar -xzvf -C $(DESTDIR) $(NASPKG)
 
 # Cleaning rules
 clean:	$(NAME)-clean
@@ -43,6 +57,7 @@ clean:	$(NAME)-clean
 		-name 'config.status' \) -print | xargs rm -rf
 	@test -d .staging && rm -rf .staging || true
 	@test -f $(NASPKG) && rm $(NASPKG) || true
+	@test -f $(INFO) && rm $(INFO) || true
 
 help:
 	@echo "Usage:"

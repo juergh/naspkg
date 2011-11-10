@@ -1,5 +1,5 @@
-NAME=sudo
-VERSION=1.0
-DATE=20111030
-AUTHOR="Juerg Haefliger <juergh@gmail.com"
-DESCRIPTION="Execute a command as another user"
+Execute a command as another user
+
+sudo - 1.0 - 2011/11/10 - Juerg Haefliger <juergh@gmail.com>
+
+  * Initial version
