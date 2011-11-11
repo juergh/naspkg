@@ -48,7 +48,7 @@ $(STAGING):
 install:
 	test -d $(DESTDIR) || mkdir -p $(DESTDIR)
 	@echo "Installing $(NASPKG) ..."
-	tar -xzvf -C $(DESTDIR) $(NASPKG)
+	tar -xzvf $(NASPKG) -C $(DESTDIR)
 
 # Cleaning rules
 clean:	$(NAME)-clean
