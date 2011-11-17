@@ -1,17 +1,16 @@
-include ../../build/make.rules
-
 SRC = utelnetd-0.1.9
+
+include ../../build/make.rules
 
 $(STAGING)/bin/utelnetd:
 	install -d -m0755 $(STAGING)/bin
-	install -m0755 $(SRC)/utelnetd $(STAGING)/bin
+	install -m0755 $(BUILD)/utelnetd $(STAGING)/bin
 
-$(SRC)/utelnetd:
-	$(MAKE) -C $(SRC)
+$(BUILD)/utelnetd:
+	$(MAKE) -C $(BUILD)
 
 $(NAME)-install: $(STAGING)/bin/utelnetd
 
-$(NAME)-source: $(SRC)/utelnetd
+$(NAME)-source: $(BUILD)/utelnetd
 
 $(NAME)-clean:
-	@make -C $(SRC) clean

@@ -12,8 +12,9 @@ else
   SHARED := $(shell test -e naspkg/imodule.xml && echo || echo shared)
 endif
 
-# Temporary staging directory
+# Temporary staging and build directories
 STAGING := .staging/$(SHARED)/$(NAME)
+BUILD := .build
 
 # Root of tree
 ROOT := $(PWD)/../../
@@ -26,7 +27,7 @@ NASPKG := $(NAME)-$(VERSION).tgz
 INFO   := $(NAME)-$(VERSION).info
 
 # Create all
-all: $(NAME)-source $(STAGING) $(NAME)-install $(NASPKG) $(INFO)
+all: $(BUILD) $(NAME)-source $(STAGING) $(NAME)-install $(NASPKG) $(INFO)
 
 # Create the info file
 $(INFO):
@@ -35,6 +36,13 @@ $(INFO):
 # Create the package tarball
 $(NASPKG):
 	tar -czvf $(NASPKG) -C .staging .
+
+# Create the build directory and copy the source
+$(BUILD):
+ifneq ($(SRC), )
+	mkdir -p $(BUILD)
+	cp -aR $(SRC)/* $(BUILD)
+endif
 
 # Create the staging directory and copy the naspkg template
 $(STAGING):
@@ -52,10 +60,8 @@ install:
 
 # Cleaning rules
 clean:	$(NAME)-clean
-	@find . \( -name '*~' -o \
-		-name 'config.log' -o \
-		-name 'config.status' \) -print | xargs rm -rf
 	@test -d .staging && rm -rf .staging || true
+	@test -d .build && rm -rf .build || true
 	@test -f $(NASPKG) && rm $(NASPKG) || true
 	@test -f $(INFO) && rm $(INFO) || true
 
