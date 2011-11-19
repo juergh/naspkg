@@ -1,0 +1,75 @@
+Collection of APKG-like packages for the DNS-323
+------------------------------------------------
+
+This repository contains the source code and build environment to build a bunch
+of APKG-like packages for the DNS-323. APKG-like because they're not packaged in
+D-Link's proprietary APKG format but are mere tarballs. These tarballs can be
+installed in the same location as the official APKGs. There are two different
+types of packages: runable and shared. The shared packages provide binaries
+and libraries and modules that the runable packages depend on. The runable
+packages are the packages that actually provide the real services and can be
+started/stopped through the GUI. If you install a package, make sure you also
+install all its requirements.
+
+
+Prerequisites
+-------------
+
+You need an ARM cross-compilation toolchain in order to compile the
+packages. You can get one from https://github.com/juergh/toolchain_arm or use
+your own.
+
+
+Compile the packages
+--------------------
+
+$ git clone git@github.com:juergh/naspkg.git
+$ cd naspkg/packages
+$ make
+
+This will build all packages. The packages are named <NAME>-<VERSION>.tgz and
+are located in the individual subdirectories. There are also
+<NAME>-<VERSION>.info files which are basically changelogs for the individual
+packages.
+
+Note: If you want the latest and greatest, checkout the develop branch.
+
+
+Install the packages
+--------------------
+
+Assuming your DNS-323 is NFS mounted at /mnt/auto/dns-323, run the following
+command to install a package:
+
+$ tar -C /mnt/auto/dns-323/Nas_Prog -xzvf <package tgz>
+
+Reboot the DNS-323 for the firmware to pick up the new package. This is only
+required if you install a runable package.
+
+Note that shared packages are all installed under Nas_Prog/shared, whereas
+runable packages are installed directly under Nas_Prog. I.e., the directoy tree
+might look like the following:
+
+Nas_Prog
+  |- shared
+  |    |- busybox
+  |    |- sudo
+  |    |- (other shared packages)
+  |- utelnetd
+  |- dropbear
+  |- (other runable packages)
+
+
+Configure the packages
+----------------------
+
+For runable (non-shared) packages, the DNS web GUI can be used to start/stop
+the package. Navigate to "Advanced" -> "Add-Ons" and you should see a list of
+installed packages and start/stop action buttons.
+
+Debugging the packages
+----------------------
+
+All packages from this repo write some form of logging data to a central
+logfile named log in the Nas_Prog directory -> Nas_Prog/log. All errors that
+are encountered during starting/stopping should get logged there.
