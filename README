@@ -54,10 +54,10 @@ Nas_Prog
   |- shared
   |    |- busybox
   |    |- sudo
-  |    |- (other shared packages)
+  |    \- (other shared packages)
   |- utelnetd
   |- dropbear
-  |- (other runable packages)
+  \- (other runable packages)
 
 
 Configure the packages
@@ -67,9 +67,21 @@ For runable (non-shared) packages, the DNS web GUI can be used to start/stop
 the package. Navigate to "Advanced" -> "Add-Ons" and you should see a list of
 installed packages and start/stop action buttons.
 
-Debugging the packages
-----------------------
+Debug the packages
+------------------
 
 All packages from this repo write some form of logging data to a central
 logfile named log in the Nas_Prog directory -> Nas_Prog/log. All errors that
-are encountered during starting/stopping should get logged there.
+are encountered during starting/stopping/running should get logged there.
+
+Remove the packages
+-------------------
+
+Removal through the web GUI is not supported. Just remove the package
+directory under the Nas_Prog directory and reboot the DNS.
+
+TODO
+----
+
+- Support package removals through the web GUI
+- dropbear: Preserve SSH host keys (store them on the harddisk?)
