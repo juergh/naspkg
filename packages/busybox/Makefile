@@ -2,6 +2,11 @@ SRC = busybox-1.00-pre1
 
 include ../../build/make.rules
 
+menuconfig: $(BUILD)
+	cp config $(BUILD)/.config
+	cd $(BUILD) && $(MAKE) menuconfig
+	cp $(BUILD)/.config config
+
 $(STAGING)/bin/busybox:
 	install -d -m0755 $(STAGING)/bin
 	install -m0755 $(BUILD)/busybox $(STAGING)/bin
