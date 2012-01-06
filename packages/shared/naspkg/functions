@@ -1,8 +1,9 @@
 #!/bin/sh
 
 # Set some important globals
-SHARED=$1/../shared
-LOGFILE=$1/../log
+NAS_PROG=$(cd ${0%/*}/.. && pwd)
+SHARED=$NAS_PROG/shared
+LOGFILE=$NAS_PROG/log
 
 # Log a message
 log()
