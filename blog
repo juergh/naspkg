@@ -1,0 +1,200 @@
+Reverse Engineering a DNS-323 Application Package (APKG)
+
+Some time ago, D-Link added the capability to the firmware of the DNS-323 to install custom application packages. These packages are distributed in a format that D-Link calls APKG. Unfortunately, D-Link has yet to publish an SDK or documentation about that format for others to build additional packages. The list of official packages can be found here: ftp://ftp.dlink.com/Multimedia/dns323/Apps. Note that not all of these ZIP files are application packages. For a description of the individual packages, you need to browse to the D-Link support website and select ‘Additional Downloads’.
+
+This post describes my attempt to reverse-engineer the APKG format so that I can build additional custom packages myself. For that, I took a closer look at the official D-Link NFS APKG, primarily because that’s the one I’m currently using on my DNS-323. After installing the package through the DNS web GUI and rebooting the box, the GUI provides start/stop/delete capabilities for the NFS server under ‘Advanced’ -> ‘Add-Ons’, as well as NFS access settings under ‘Advanced’ -> ‘Network access’.
+
+Drilling a little deeper, I found that the package files were installed in the Nas_Prog directory on the DNS harddrive. In my case, I have the DNS volume auto-mounted via NFS at /mnt/auto/dns-323 and the NFS package directory tree looks like the following: 
+
+/mnt/auto/dns-323/Nas_Prog/NFS/
+                              |-sbin/
+                              |     |-exportfs
+                              |     |-nfs_config
+                              |     |-rpc.mountd
+                              |     |-nfs
+                              |     |-portmap
+                              |     \-rpc.nfsd
+                              |-pre_inst.sh
+                              |-rm_link.sh
+                              |-stop.sh
+                              |-start.sh
+                              |-install.sh
+                              |-imodule.xml
+                              \-remove.sh
+
+Unfortunately, the NFS package is not self-contained as a closer look at the DNS firmware revealed. There is some hard-coded JavaScript code related to the NFS GUI in the web page code of the firmware. Which makes the whole APKG concept kind of questionable. However, the firmware is at least smart enough to automatically detect installed APKGs (even unofficial ones) and add them to the packages list under ‘Advanced’ -> ‘Add-Ons’ so that they can be started and stopped through the GUI.
+
+I won’t go into details about the files in Nas_Prog/NFS/sbin. These are the executables that provide the functionality of the NFS package. nfs_config is most likely a D-Link tool that is used by the firmware when the user modifies NFS-related settings through the web GUI.
+
+The following sections describe the other files in Nas_Prog/NFS  which are used by the firmware to discover and manage the NFS package.
+
+imodule.xml
+
+One of the more interesting files is imodule.xml file. The DNS firmware scans the Nas_Prog directory for imodule.xml files, which contain some basic information about the installed APKGs. In case of the NFS package, the content of imodule.xml is the following:
+
+<config>
+    <apkg>
+        <item>
+            <procudt_id>0</procudt_id>
+            <custom_id>8</custom_id>
+            <model_id>1</model_id>
+            <name>NFS</name>
+            <show>NFS</show>
+            <enable>0</enable>
+            <version>1.00</version>
+            <date>20090729</date>
+            <path>/mnt/HD_a2/Nas_Prog/NFS</path>
+            <ps_name>nfsd</ps_name>
+            <url>NULL</url>
+        </item>
+    </apkg>
+</config>
+
+The interesting tags are <show> which defines the module name as shown in the web GUI, <enable> which is used by the firmware to determine whether or not to start the package during boot, <version> which is also shown in the GUI, <path> which is the full path to the package and finally <ps_name> which the firmware uses to determine if a package is in started or stopped state.
+
+For a package to show up in the ‘Add-Ons’ section of the GUI, only a properly formatted imodule.xml file is required. Obviously, such a package wouldn’t provide much functionality :-)
+
+install.sh
+
+After unpacking the package files to a temporary location, the firmware calls install.sh which will copy the package files from the temporary location to the final destination. This script is only required for packages that can be installed through the web GUI.
+
+Content of Nas_Prog/NFS/install.sh:
+
+#!/bin/sh
+
+path_src=$1
+path_des=$2
+
+cp -R $path_src $path_des
+
+pre_inst.sh
+
+Called by the firmware during the DNS boot process. For the NFS package, the script creates symbolic links from /usr/sbin/ to the executables in Nas_Prog/NFS/sbin.
+
+Content of Nas_Prog/NFS/pre_inst.sh:
+
+#!/bin/sh
+#exportfs.ko  nfsd.ko
+path=$1
+#echo "Link file from : "$path
+rm /usr/sbin/exportfs
+rm /usr/sbin/nfs
+rm /usr/sbin/nfs_config
+rm /usr/sbin/portmap
+rm /usr/sbin/rpc.mountd
+rm -rf /var/lib/
+ln -s $path/sbin/exportfs /usr/sbin/exportfs
+ln -s $path/sbin/nfs /usr/sbin/nfs
+ln -s $path/sbin/nfs_config /usr/sbin/nfs_config
+ln -s $path/sbin/portmap /usr/sbin/portmap
+ln -s $path/sbin/rpc.mountd /usr/sbin/rpc.mountd
+ln -s $path/sbin/rpc.nfsd /usr/sbin/rpc.nfsd
+
+start.sh
+
+Called when the package is started. Either when the user clicks the start button in the web GUI or, if the package is enabled, automatically by the firmware during the DNS boot process (after pre_inst.sh). For the NFS package, the scripts creates some required files and then fires of the NFS and portmap daemons and exports the NFS filesystem(s).
+
+Content of Nas_Prog/NFS/start.sh:
+
+#!/bin/sh
+echo -e "Start config the NFS needed file...."
+mkdir -p /var/lib/nfs/
+touch /var/lib/nfs/xtab; chmod 644 /var/lib/nfs/xtab
+touch /var/lib/nfs/etab; chmod 644 /var/lib/nfs/etab
+touch /var/lib/nfs/rmtab; chmod 644 /var/lib/nfs/rmtab
+mkdir -p /var/lib/nfs/sm /var/lib/nfs/sm.bak
+touch /var/lib/nfs/state
+chmod go-rwx /var/lib/nfs/sm /var/lib/nfs/sm.bak /var/lib/nfs/state
+echo -e "Config Over."
+#reserve for /etc/exports
+if [ ! -e /etc/exports ];then
+    if [ -e /tmp/load_module_finished ];then
+        nfs_config
+    else
+        touch /etc/exports
+    fi
+fi
+echo -e "Start portmap...."
+/usr/sbin/portmap
+exportfs -ra
+mount -t nfsd nfsd /proc/fs/nfsd
+echo -e "Start NFS Deamon ."
+/usr/sbin/rpc.nfsd
+/usr/sbin/rpc.mountd
+/usr/sbin/exportfs -r
+echo -e "Start NFS Server OVER ."
+sleep 1
+touch /tmp/NFS_On
+
+stop.sh
+
+Called when the package is stopped. Either when the user clicks the stop button in the web GUI or when the DNS shuts down. The script just stops the portmap and NFS daemons and removes any files that these daemons created or were relying upon.
+
+Content of Nas_Prog/NFS/stop.sh:
+
+#!/bin/sh
+echo -e "Stop NFS Deamon...."
+kill -9 `pidof nfsd`
+sleep 1
+echo "Stop NFS mountd...."
+kill -9 `pidof rpc.mountd`
+umount /proc/fs/nfsd
+echo "Stop Portmap."
+kill -9 `pidof portmap`
+exportfs -ra
+rm /var/lib/nfs/xtab
+rm /var/lib/nfs/etab
+rm /var/lib/nfs/rmtab
+rm /var/lib/nfs/state
+rm -rf /var/lib/nfs/sm
+rm -rf /var/lib/nfs/sm.bak
+rm -rf /var/lib/nfs/
+if [ -e /etc/exports ];then
+    rm /etc/exports
+fi
+echo -e "Stop NFS Server OVER."
+if [ -e /tmp/NFS_On ];then
+    rm /tmp/NFS_On
+fi
+sleep 1
+
+rm_link.sh
+
+Called by the firmware during the shutdown process of the DNS (after stop.sh). For the NFS package, the script removes the symbolic links that pre_inst.sh created.
+
+Content of Nas_Prog/NFS/rm_link.sh:
+
+#!/bin/sh
+nfs_stop.sh
+rm /usr/sbin/exportfs
+rm /usr/sbin/nfs
+rm /usr/sbin/nfs_config
+rm /usr/sbin/portmap
+rm /usr/sbin/rpc.mountd
+rm /usr/sbin/rpc.nfsd
+rm -rf /var/lib/
+
+remove.sh
+
+Called when the package is removed through the web GUI. For the NFS package, the script stops the NFS server, removes the links created by pre_inst.sh and removes the directory Nas_Prog/NFS.
+
+Content of Nas_Prog/NFS/remove.sh:
+
+#!/bin/sh
+path=$1
+nfs stop
+rm /usr/sbin/exportfs
+rm /usr/sbin/nfs
+rm /usr/sbin/nfs_config
+rm /usr/sbin/portmap
+rm /usr/sbin/rpc.mountd
+rm /usr/sbin/rpc.nfsd
+rm -rf /var/lib/
+rm -rf $path
+
+The scripts in the NFS package are quite simple in nature and with the information provided, it’s fairly easy to create additional packages that can be installed (manually) and managed through the DNS web GUI. The only things that are not possible at the moment are:
+
+1) Installation through the web GUI due to lack of information about the APKG format.
+2) Additional package configuration through the web GUI. In that case, the web server in the firmware would have to be modified to support the package. Not a very clever design.
+
+Long overdue, I created some additional packages that I’ve been running on my DNS for quite some time now without encountering any problems. Be sure to check them out at: http://blujay.ch/naspkg.
