@@ -4,7 +4,7 @@
 #
 
 # where to install
-INSTDIR		:= /usr/local/bin/
+INSTDIR		:= $(DESTDIR)/usr/bin
 
 # GNU target string 
 @CROSS		:= arm-linux-uclibc-
@@ -60,7 +60,7 @@ $(PROGS): $(OBJS)
 .PHONY: install
 install: $(PROGS)
 	$(INSTALL) -d $(INSTDIR)
-	$(INSTALL) -m $(INSTMODE) -o $(INSTOWNER) -g $(INSTGROUP) $(PROGS) $(INSTDIR)
+	$(INSTALL) -m $(INSTMODE) -s --strip-program=$(STRIP) $(PROGS) $(INSTDIR)
 
 .PHONY: clean
 clean:
