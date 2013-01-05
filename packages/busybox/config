@@ -66,7 +66,7 @@ CONFIG_CAT=y
 CONFIG_CHGRP=y
 CONFIG_CHMOD=y
 CONFIG_CHOWN=y
-# CONFIG_CHROOT is not set
+CONFIG_CHROOT=y
 CONFIG_CMP=y
 CONFIG_CP=y
 # CONFIG_CUT is not set
@@ -175,7 +175,7 @@ CONFIG_FEATURE_HUMAN_READABLE=y
 # CONFIG_MKTEMP is not set
 # CONFIG_READLINK is not set
 # CONFIG_RUN_PARTS is not set
-# CONFIG_WHICH is not set
+CONFIG_WHICH=y
 
 #
 # Editors
@@ -375,7 +375,11 @@ CONFIG_FEATURE_COMMAND_HISTORY=15
 #
 # System Logging Utilities
 #
-# CONFIG_SYSLOGD is not set
+CONFIG_SYSLOGD=y
+# CONFIG_FEATURE_REMOTE_LOG is not set
+# CONFIG_FEATURE_IPC_SYSLOG is not set
+CONFIG_KLOGD=y
+# CONFIG_LOGGER is not set
 
 #
 # Linux System Utilities
