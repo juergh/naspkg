@@ -1,0 +1,75 @@
+#!/bin/bash
+
+NAS_PROG=/mnt/auto/dns-323/Nas_Prog
+
+function fatal()
+{
+    echo "ERROR: $*"
+    exit 1
+}
+
+function usage()
+{
+    cat <<EOF
+Usage: $(basename $0) <action> [package name]
+EOF
+    exit 2
+}
+
+function list()
+{
+    infos=$(find $NAS_PROG -name info)
+
+    for info in $infos ; do
+	desc=$(head -1 $info)
+	summary=$(head -3 $info | tail -1)
+	name=$(echo $summary | awk '{ print $1 }')
+	version=$(echo $summary | awk '{ print $3 }')
+	date=$(echo $summary | awk '{ print $5 }')
+	printf "%-20s %-6s %s\n" "$name" "$version" "$desc"
+    done
+}
+
+function remove()
+{
+    pkg=$1
+
+    if [ -d $NAS_PROG/$pkg ] ; then
+	dir=$NAS_PROG/$pkg
+    elif [ -d $NAS_PROG/shared/$pkg ] ; then
+	dir=$NAS_PROG/shared/$pkg
+    else
+	fatal "Package '$pkg' is not installed"
+    fi
+
+    echo -n "Remove $dir [Y/n]? "
+    read val
+    if [ "$val" = "" -o "$val" = "y" ] ; then
+	rm -rf $dir
+    fi
+}
+
+function install()
+{
+    pkg=$1
+
+    tar -xzvf $pkg -C $NAS_PROG
+}
+
+case "$1" in
+    list)
+	list
+	;;
+    remove)
+	shift
+	test "$1" = "" && usage
+	remove $1
+	;;
+    install)
+	shift
+	test "$1" = "" && usage
+	install $1
+	;;
+    *)
+	;;
+esac
