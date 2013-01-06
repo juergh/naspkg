@@ -1,5 +1,9 @@
 Small telnet daemon for standalone use
 
+utelnetd - 1.1 - 2013/01/05 - Juerg Haefliger <juergh@gmail.com>
+
+  * Strip binaries
+
 utelnetd - 1.0 - 2011/11/10 - Juerg Haefliger <juergh@gmail.com>
 
   * Initial version
