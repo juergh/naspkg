@@ -12,22 +12,41 @@ else
   SHARED := $(shell test -e naspkg/imodule.xml && echo || echo shared)
 endif
 
-# Temporary staging and build directories
-STAGING := .staging/$(SHARED)/$(NAME)
+# Find the root of the tree
+ROOT := $(shell \
+	d=$$(readlink -e .) ; \
+	while [ ! -d $$d/packages ] ; do \
+		d=$$(readlink -e $$d/../) ; \
+	done ; \
+	echo $$d)
+
+# Temporary install and build directories
+INSTALL := .install/$(SHARED)/$(NAME)
 BUILD := .build
 
-# Root of tree
-ROOT := $(PWD)/../../
+# Staging directory
+STAGING := $(ROOT)/staging
 
-# Installation directory
+# Local installation directory (for testing purposes)
 DESTDIR := $(ROOT)/Nas_Pkg
 
 # Package and info file names
 NASPKG := $(NAME)-$(VERSION).tgz
 INFO   := $(NAME)-$(VERSION).info
 
-# Create all
-all: $(BUILD) $(NAME)-source $(STAGING) $(NAME)-install $(NASPKG) $(INFO)
+# Compiler and linker flags
+CPPFLAGS += -I$(STAGING)/usr/include
+LDFLAGS += -L$(STAGING)/usr/lib
+PKG_CONFIG_PATH := $(STAGING)/usr/lib/pkgconfig
+
+# Build targets
+TARGETS := $(foreach s, $(SRC), $(BUILD)/$(s) $(s)-build $(s)-install) \
+	$(INSTALL)/info \
+	$(NASPKG) \
+	$(INFO)
+
+# Build all
+all: $(TARGETS)
 
 # Create the info file
 $(INFO):
@@ -35,22 +54,29 @@ $(INFO):
 
 # Create the package tarball
 $(NASPKG):
-	tar -czvf $(NASPKG) -C .staging .
+	tar -czvf $(NASPKG) -C .install .
 
 # Create the build directory and copy the source
-$(BUILD):
-ifneq ($(SRC), )
-	mkdir -p $(BUILD)
-	cp -aR $(SRC)/* $(BUILD)
-endif
+$(BUILD)/%:
+	mkdir -p $@
+	cp -aR $*/* $@
 
-# Create the staging directory and copy the naspkg template
-$(STAGING):
-	mkdir -p $(STAGING)
-	cp -aR naspkg/* $(STAGING)
-	test -e $(STAGING)/imodule.xml && \
+# Create the build directory and copy the source
+#$(BUILD):
+#ifneq ($(SRC), )
+#	echo $(SRC)
+#	mkdir -p $(BUILD)
+#	for dir in $(SRC) ; do echo $$dir done
+#	cp -aR $(SRC)/* $(BUILD)
+#endif
+
+# Create the install directory and copy the naspkg template
+$(INSTALL)/info:
+	mkdir -p $(INSTALL) || true
+	cp -aR naspkg/* $(INSTALL)
+	test -e $(INSTALL)/imodule.xml && \
 		sed -i -e 's/VERSION/$(VERSION)/' -e 's/DATE/$(DATE)/' \
-			$(STAGING)/imodule.xml || true
+			$(INSTALL)/imodule.xml || true
 
 # Install the package
 install:
@@ -59,11 +85,13 @@ install:
 	tar -xzvf $(NASPKG) -C $(DESTDIR)
 
 # Cleaning rules
-clean:	$(NAME)-clean
-	@test -d .staging && rm -rf .staging || true
+#clean:	$(NAME)-clean
+clean:
+	@test -d .install && rm -rf .install || true
 	@test -d .build && rm -rf .build || true
 	@test -f $(NASPKG) && rm $(NASPKG) || true
 	@test -f $(INFO) && rm $(INFO) || true
 
-help:
-	@echo "Usage:"
+deepclean: clean
+	@test -d $(DESTDIR) && rm -rf $(DESTDIR) || true
+	@test -d $(STAGING) && rm -rf $(STAGING) || true

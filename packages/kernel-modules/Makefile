@@ -1,4 +1,6 @@
-SRC = linux-2.6.12.6-arm1
+KERNEL := linux-2.6.12.6-arm1
+
+SRC := $(KERNEL)
 
 MODULES = \
 	sound/core/oss/snd-mixer-oss.ko \
@@ -14,23 +16,23 @@ MODULES = \
 
 include ../../build/make.rules
 
-menuconfig:
-	cd $(BUILD) && $(MAKE) ARCH=arm menuconfig
-	cp $(BUILD)/.config config
+BDIR := $(BUILD)/$(KERNEL)
 
-$(STAGING)/kernel/sound/core/oss/snd-mixer-oss.ko:
+menuconfig:
+	cd $(BDIR) && $(MAKE) ARCH=arm menuconfig
+	cp $(BDIR)/.config config
+
+$(INSTALL)/kernel/sound/core/oss/snd-mixer-oss.ko:
 	for mod in $(MODULES) ; do \
 		dir=$$(dirname $$mod) ; \
-		install -d -m0755 $(STAGING)/kernel/$$dir ; \
-		install -m0644 $(BUILD)/$$mod $(STAGING)/kernel/$$dir ; \
+		install -d -m0755 $(INSTALL)/kernel/$$dir ; \
+		install -m0644 $(BDIR)/$$mod $(INSTALL)/kernel/$$dir ; \
 	done
 
-$(BUILD)/sound/core/oss/snd-mixer-oss.ko:
-	cp -f config $(BUILD)/.config
-	cd $(BUILD) && $(MAKE) ARCH=arm CROSS_COMPILE=arm-linux-uclibc- modules
+$(BDIR)/sound/core/oss/snd-mixer-oss.ko:
+	cp -f config $(BDIR)/.config
+	cd $(BDIR) && $(MAKE) ARCH=arm CROSS_COMPILE=arm-linux-uclibc- modules
 
-$(NAME)-install: $(STAGING)/kernel/sound/core/oss/snd-mixer-oss.ko
+$(KERNEL)-install: $(INSTALL)/kernel/sound/core/oss/snd-mixer-oss.ko
 
-$(NAME)-source: $(BUILD)/sound/core/oss/snd-mixer-oss.ko
-
-$(NAME)-clean:
+$(KERNEL)-build: $(BDIR)/sound/core/oss/snd-mixer-oss.ko

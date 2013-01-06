@@ -1,22 +1,27 @@
-SRC = dropbear-0.53.1
+DROPBEAR := dropbear-0.53.1
+
+SRC := $(DROPBEAR)
 
 include ../../build/make.rules
 
-$(STAGING)/bin/dropbear:
-	install -d -m0755 $(STAGING)/bin
-	install -m0755 $(BUILD)/dropbear $(STAGING)/bin
-	install -m0755 $(BUILD)/dropbearkey $(STAGING)/bin
-	install -m0755 $(BUILD)/scp $(STAGING)/bin
+BDIR := $(BUILD)/$(DROPBEAR)
 
-$(BUILD)/dropbear:
-	cd $(BUILD) && ./configure --host=i686-pc-linux-gnu --disable-syslog \
-		--disable-lastlog --disable-wtmp --disable-wtmpx
-	$(MAKE) -C $(BUILD)
-	$(MAKE) -C $(BUILD) scp
+$(INSTALL)/bin/dropbear:
+	install -d -m0755 $(INSTALL)/bin
+	install -m0755 $(STAGING)/usr/sbin/dropbear $(INSTALL)/bin
+	install -m0755 $(STAGING)/usr/bin/dropbearkey $(INSTALL)/bin
+	install -m0755 $(STAGING)/usr/bin/scp $(INSTALL)/bin
 
-$(NAME)-install: $(STAGING)/bin/dropbear
+$(BDIR)/dropbear:
+	cd $(BDIR) && \
+		./configure --host=i686-pc-linux-gnu --prefix=/usr \
+			--disable-syslog --disable-lastlog --disable-wtmp \
+			--disable-wtmpx
+	$(MAKE) -C $(BDIR) PROGRAMS="dropbear dropbearkey scp" \
+		DESTDIR=$(STAGING) strip install
 
-$(NAME)-source: $(BUILD)/dropbear
+$(DROPBEAR)-install: $(INSTALL)/bin/dropbear
 
-$(NAME)-clean:
+$(DROPBEAR)-build: $(BDIR)/dropbear
+
 

@@ -1,25 +1,30 @@
-SRC = busybox-1.00-pre1
+BUSYBOX := busybox-1.00-pre1
+
+SRC := $(BUSYBOX)
 
 include ../../build/make.rules
 
-menuconfig: $(BUILD)
-	cp config $(BUILD)/.config
-	cd $(BUILD) && $(MAKE) menuconfig
-	cp $(BUILD)/.config config
+BDIR := $(BUILD)/$(BUSYBOX)
 
-$(STAGING)/bin/busybox:
-	install -d -m0755 $(STAGING)/bin
-	install -m0755 $(BUILD)/busybox $(STAGING)/bin
-	install -m0644 $(BUILD)/busybox.links.diff $(STAGING)/busybox.links
+menuconfig: $(BDIR)
+	cp config $(BDIR)/.config
+	cd $(BDIR) && $(MAKE) menuconfig
+	cp $(BDIR)/.config config
 
-$(BUILD)/busybox:
-	cp config $(BUILD)/.config
-	$(MAKE) -C $(BUILD)
-	diff $(BUILD)/busybox.links $(BUILD)/busybox.links.dns-323 | \
-		awk '/^</ { print $$2 }' > $(BUILD)/busybox.links.diff
+$(INSTALL)/bin/busybox:
+	install -d -m0755 $(INSTALL)/bin
+	install -m0755 $(STAGING)/usr/bin/busybox $(INSTALL)/bin
+	install -m0644 $(BDIR)/busybox.links.diff $(INSTALL)/busybox.links
 
-$(NAME)-install: $(STAGING)/bin/busybox
+$(BDIR)/busybox:
+	cp config $(BDIR)/.config
+	$(MAKE) -C $(BDIR)
+	diff $(BDIR)/busybox.links $(BDIR)/busybox.links.dns-323 | \
+		awk '/^</ { print $$2 }' > $(BDIR)/busybox.links.diff
+	install -d -m0755 $(STAGING)/usr/bin
+	install -m0755 -s --strip-program=$(STRIP) $(BDIR)/busybox \
+		$(STAGING)/usr/bin
 
-$(NAME)-source: $(BUILD)/busybox
+$(BUSYBOX)-install: $(INSTALL)/bin/busybox
 
-$(NAME)-clean:
+$(BUSYBOX)-build: $(BDIR)/busybox

@@ -1,17 +1,22 @@
-SRC = sudo-1.6.8p12
+SUDO := sudo-1.6.8p12
+
+SRC := $(SUDO)
 
 include ../../build/make.rules
 
-$(STAGING)/bin/sudo:
-	install -d -m0755 $(STAGING)/bin
-	install -m0755 $(BUILD)/sudo $(STAGING)/bin
+BDIR := $(BUILD)/$(SUDO)
 
-$(BUILD)/sudo:
-	cd $(BUILD) && ./configure --host=i686-pc-linux-gnu
-	$(MAKE) -C $(BUILD)
+$(INSTALL)/bin/sudo:
+	install -d -m0755 $(INSTALL)/bin
+	install -m0755 $(STAGING)/usr/bin/sudo $(INSTALL)/bin
 
-$(NAME)-install: $(STAGING)/bin/sudo
+$(BDIR)/sudo:
+	cd $(BDIR) && \
+		./configure --host=i686-pc-linux-gnu --prefix=/usr \
+			--disable-shared
+	$(MAKE) -C $(BDIR)
+	$(MAKE) -C $(BDIR) DESTDIR=$(STAGING) install
 
-$(NAME)-source: $(BUILD)/sudo
+$(SUDO)-install: $(INSTALL)/bin/sudo
 
-$(NAME)-clean:
+$(SUDO)-build: $(BDIR)/sudo
