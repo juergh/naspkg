@@ -84,4 +84,3 @@ TODO
 ----
 
 - Support package removals through the web GUI
-- dropbear: Preserve SSH host keys (store them on the harddisk?)
