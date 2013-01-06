@@ -19660,7 +19660,12 @@ else
 fi;
 echo "$as_me:$LINENO: result: $with_noexec" >&5
 echo "${ECHO_T}$with_noexec" >&6
-NOEXECDIR="`echo $with_noexec|sed 's:^\(.*\)/[^/]*:\1:'`"
+
+if test "$with_noexec" = "no"; then
+    NOEXECDIR=
+else
+    NOEXECDIR="`echo $with_noexec|sed 's:^\(.*\)/[^/]*:\1:'`"
+fi
 
 if test "$with_devel" = "yes" -a -n "$GCC"; then
     CFLAGS="${CFLAGS} -Wall"
