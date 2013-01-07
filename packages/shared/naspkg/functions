@@ -54,3 +54,6 @@ exec >> $LOGFILE 2>&1
 
 # Log the script's invocation
 log $0: $*
+
+# Export path to shared libraries
+export LD_LIBRARY_PATH=$SHARED/libs/lib

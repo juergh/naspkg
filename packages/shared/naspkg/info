@@ -1,5 +1,9 @@
 Shared files and functions
 
+shared - 1.1 - 2013/01/07 - Juerg Haefliger <juergh@gmail.com>
+
+  * Add LD_LIBRARY_PATH to point to shared libs
+
 shared - 1.0 - 2011/11/10 - Juerg Haefliger <juergh@gmail.com>
 
   * Initial version
