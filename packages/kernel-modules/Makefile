@@ -34,5 +34,4 @@ $(BDIR)/sound/core/oss/snd-mixer-oss.ko:
 	cd $(BDIR) && $(MAKE) ARCH=arm CROSS_COMPILE=arm-linux-uclibc- modules
 
 $(KERNEL)-install: $(INSTALL)/kernel/sound/core/oss/snd-mixer-oss.ko
-
 $(KERNEL)-build: $(BDIR)/sound/core/oss/snd-mixer-oss.ko
