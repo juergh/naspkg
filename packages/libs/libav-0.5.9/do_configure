@@ -1,9 +1,0 @@
-#!/bin/bash
-./configure --prefix=/usr --cc=$CC \
-    --enable-cross-compile \
-    --enable-shared \
-    --disable-static \
-    --disable-ffmpeg \
-    --disable-ffplay \
-    --disable-ffserver \
-    --disable-devices
