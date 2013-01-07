@@ -15,9 +15,9 @@ for pts in 0 1 2 3 4 5 6 ; do
 done
 
 # Generate the private key
-test -d /etc/dropbear || mkdir /etc/dropbear
-test -e /etc/dropbear/dropbear_rsa_host_key || \
-    $1/bin/dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key
+test -d $1/etc/dropbear || mkdir -p $1/etc/dropbear
+test -e $1/etc/dropbear/dropbear_rsa_host_key || \
+    $1/bin/dropbearkey -t rsa -f $1/etc/dropbear/dropbear_rsa_host_key
 
 # Create the admin home directory
 test -d /home/admin || \
@@ -27,6 +27,6 @@ test -d /home/admin || \
 ln -s $1/bin/scp /bin/scp
 
 # Run the SSH server
-start $1/bin/dropbear
+start $1/bin/dropbear -r $1/etc/dropbear/dropbear_rsa_host_key
 
 sleep 1

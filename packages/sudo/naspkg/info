@@ -1,5 +1,9 @@
 Execute a command as another user
 
+sudo - 1.1 - 2013/01/05 - Juerg Haefliger <juergh@gmail.com>
+
+  * Strip binaries
+
 sudo - 1.0 - 2011/11/10 - Juerg Haefliger <juergh@gmail.com>
 
   * Initial version

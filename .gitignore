@@ -1,2 +1,6 @@
 *~
-packages/*.tgz
+packages/*/.build
+packages/*/.install
+packages/*/*.info
+packages/*/*.tgz
+staging

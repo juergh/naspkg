@@ -1,5 +1,10 @@
 Lightweight SSH2 server
 
+dropbear - 1.1 - 2013/01/05 - Juerg Haefliger <juergh@gmail.com>
+
+  * Strip binaries
+  * Move generated host key to harddisk
+
 dropbear - 1.0 - 2011/11/10 - Juerg Haefliger <juergh@gmail.com>
 
   * Initial version

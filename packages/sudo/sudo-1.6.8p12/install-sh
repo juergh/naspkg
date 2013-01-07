@@ -15,7 +15,7 @@ LN=ln
 MKDIR=mkdir
 MV=mv
 RM=rm
-STRIP=strip
+#STRIP=strip
 WHOAMI="echo root"
 
 ##  Some systems don't support -x, so we have to use -f.
@@ -35,12 +35,12 @@ for d in /usr/bin /bin /usr/ucb /usr/bsd; do
     fi
 done
 
-for d in /usr/ccs/bin /usr/bin /bin; do
-    if [ -f $d/strip ]; then
-	STRIP=${d}/strip
-	break
-    fi
-done
+#for d in /usr/ccs/bin /usr/bin /bin; do
+#    if [ -f $d/strip ]; then
+#	STRIP=${d}/strip
+#	break
+#    fi
+#done
 
 ##  Defaults.
 CHOWNIT=false

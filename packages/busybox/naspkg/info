@@ -1,5 +1,13 @@
 The Swiss Army Knife of Embedded Linux
 
+busybox - 1.2 - 2013/01/05 - Juerg Haefliger <juergh@gmail.com>
+
+  * Strip binaries
+
+busybox - 1.1 - 2012/02/26 - Juerg Haefliger <juergh@gmail.com>
+
+  * Added more applets: syslogd, klogd, which
+
 busybox - 1.0 - 2011/11/10 - Juerg Haefliger <juergh@gmail.com>
 
   * Initial version
